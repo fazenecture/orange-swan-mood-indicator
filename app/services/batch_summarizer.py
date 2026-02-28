@@ -27,9 +27,10 @@ class BatchSummarizer:
         posts: list[dict],
         batch_index: int = 0,
         total_batches: int = 1,
+        world_context: str = "",
     ) -> dict:
         prompt = self._prompt_builder.build_batch_summary_prompt(
-            posts, batch_index, total_batches
+            posts, batch_index, total_batches, world_context
         )
         logger.debug("Summarizing batch %d/%d", batch_index + 1, total_batches)
         return await self._get_chain().ainvoke({"user_prompt": prompt})

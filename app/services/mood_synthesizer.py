@@ -28,9 +28,10 @@ class MoodSynthesizer:
         new_batch_summary: dict,
         new_posts: list[dict],
         rag_context: list[str] | None = None,
+        world_context: str | None = None,
     ) -> dict:
         prompt = self._prompt_builder.build_mood_synthesis_prompt(
-            state, new_batch_summary, new_posts, rag_context
+            state, new_batch_summary, new_posts, rag_context, world_context=world_context
         )
         logger.debug("Running mood synthesis...")
         result = await self._get_chain().ainvoke({"user_prompt": prompt})

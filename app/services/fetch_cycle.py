@@ -1,3 +1,4 @@
+import asyncio
 from datetime import datetime, timezone
 
 from app.ingestion.fetcher import TruthSocialFetcher
@@ -49,6 +50,17 @@ class FetchCycleService:
         raw_posts = await self._fetcher.fetch_new_posts(since_id)
 
         logger.debug("RAW Posts %d", len(raw_posts))
+        
+        # Fetch world context and posts concurrently
+        world_context, raw_posts = await asyncio.gather(
+            self._get_world_context(),
+            self._fetcher.fetch_new_posts(since_id),
+        )
+
+        print("world_context", world_context)
+
+        if world_context:
+            logger.info("World context fetched: %d", len(world_context))
 
         if not raw_posts:
             logger.info("No new posts — cycle skipped")
@@ -62,7 +74,7 @@ class FetchCycleService:
 
         batch_index = len(state.get("context_summaries", []))
         new_batch_summary = await self._batch_summarizer.summarize_batch(
-            parsed_posts, batch_index
+            parsed_posts, batch_index, world_context=world_context
         )
         print("new_batch_summary", new_batch_summary)
 
@@ -75,7 +87,7 @@ class FetchCycleService:
 
         mood_before = state["current_mood"]["label"]
         synthesis = await self._mood_synthesizer.synthesize(
-            state, new_batch_summary, parsed_posts, rag_context
+            state, new_batch_summary, parsed_posts, rag_context, world_context=world_context
         )
 
         updated_state = self._build_updated_state(
@@ -170,3 +182,35 @@ class FetchCycleService:
                 },
             ],
         }
+
+    async def _get_world_context(self) -> str:
+        """Get current news headlines relevant to Trump using Claude with web search."""
+        try:
+            import anthropic
+            from app.config.settings import settings
+
+            client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
+            response = client.messages.create(
+                model=settings.sonnet_model,
+                max_tokens=500,
+                tools=[{"type": "web_search_20250305", "name": "web_search"}],
+                messages=[{
+                    "role": "user",
+                    "content": (
+                        "Give me a brief 5-bullet summary of the most important "
+                        "political, legal, economic, and market news from the last "
+                        "24 hours that Donald Trump would likely be reacting to. "
+                        "Focus on: court cases, political rivals, market moves, "
+                        "media coverage of him, and major policy developments. "
+                        "Be concise — one line per bullet."
+                    ),
+                }],
+            )
+            text = " ".join(
+                block.text for block in response.content
+                if hasattr(block, "text")
+            )
+            return text.strip()
+        except Exception as exc:
+            logger.warning("World context fetch failed: %s", exc)
+            return ""
