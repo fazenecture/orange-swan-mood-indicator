@@ -9,3 +9,8 @@ lint:
 
 format:
 	uv run ruff format .
+
+deploy:
+	git pull
+	uv sync
+	pm2 restart mood-analyzer
