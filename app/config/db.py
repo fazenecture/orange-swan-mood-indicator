@@ -46,6 +46,9 @@ def run_migrations() -> None:
             exclamation_count   INT DEFAULT 0,
             has_nickname        BOOLEAN DEFAULT FALSE,
             has_superlative     BOOLEAN DEFAULT FALSE,
+            has_grievance       BOOLEAN DEFAULT FALSE,
+            has_agitation       BOOLEAN DEFAULT FALSE,
+            has_rally           BOOLEAN DEFAULT FALSE,
             word_count          INT DEFAULT 0,
             signal_strength     VARCHAR,
             created_at          TIMESTAMP WITH TIME ZONE DEFAULT NOW()

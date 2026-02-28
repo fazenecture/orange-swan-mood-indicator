@@ -6,6 +6,9 @@ from app.utils.constants import (
     NICKNAME_PATTERN,
     SUPERLATIVE_PATTERN,
     URL_PATTERN,
+    GRIEVANCE_PATTERN,
+    AGGRESSION_PATTERN,
+    RALLY_PATTERN,
 )
 from app.utils.logger import get_logger
 
@@ -97,6 +100,9 @@ class PostParser:
                 "exclamation_count": 0,
                 "has_nickname": False,
                 "has_superlative": False,
+                "has_grievance": False,
+                "has_agitation": False,
+                "has_rally": False,
                 "word_count": 0,
                 "signal_strength": SignalStrength.LOW,
             }
@@ -116,9 +122,13 @@ class PostParser:
             "exclamation_count": content.count("!"),
             "has_nickname": bool(NICKNAME_PATTERN.search(content)),
             "has_superlative": bool(SUPERLATIVE_PATTERN.search(content)),
+            "has_grievance": bool(GRIEVANCE_PATTERN.search(content)),
+            "has_aggression": bool(AGGRESSION_PATTERN.search(content)),
+            "has_rally": bool(RALLY_PATTERN.search(content)),
             "word_count": len(words),
             "signal_strength": strength,
         }
+
 
     def _parse_datetime(self, value: str) -> datetime:
         return datetime.fromisoformat(value.replace("Z", "+00:00"))

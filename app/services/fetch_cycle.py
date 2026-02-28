@@ -56,6 +56,7 @@ class FetchCycleService:
 
         parsed_posts = self._parser.parse_many(raw_posts)
         parsed_posts = self._local_analyzer.analyze_many(parsed_posts)
+        print("parsed_posts", parsed_posts)
 
         self._posts_repo.save_posts(parsed_posts)
 
@@ -63,11 +64,14 @@ class FetchCycleService:
         new_batch_summary = await self._batch_summarizer.summarize_batch(
             parsed_posts, batch_index
         )
+        print("new_batch_summary", new_batch_summary)
 
         rag_context = self._mood_retriever.retrieve_similar(
             themes=new_batch_summary.get("key_themes", []),
             current_mood=state["current_mood"]["label"],
         )
+        
+        print("rag_context", rag_context)
 
         mood_before = state["current_mood"]["label"]
         synthesis = await self._mood_synthesizer.synthesize(

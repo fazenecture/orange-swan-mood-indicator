@@ -1,10 +1,13 @@
 import asyncio
+import random
 import time
 from datetime import date, timezone, datetime
 from playwright.async_api import async_playwright, BrowserContext
 from app.config.settings import settings
 from app.utils.logger import get_logger
 from app.ingestion.proxy_manager import ProxyManager
+from app.utils.constants import USER_AGENTS
+from app.config.settings import ProxyConfig
 import zoneinfo
 
 logger = get_logger(__name__)
@@ -61,6 +64,9 @@ class TruthSocialFetcher:
         async def handle_response(response):
             nonlocal api_response
             # Intercept the page's natural statuses call — ignore pinned/media variants
+            print("response.url", response.url)
+            print("response.status", response.status)
+            
             if (
                 f"/accounts/{settings.account_id}/statuses" in response.url
                 and "pinned=true" not in response.url
@@ -123,6 +129,7 @@ class TruthSocialFetcher:
 
         return self._context  # type: ignore[return-value]
 
+
     async def _create_session(self) -> None:
         proxy = self._proxy_manager.get_next()
         self._current_proxy = proxy
@@ -149,15 +156,45 @@ class TruthSocialFetcher:
         )
 
         self._context = await browser.new_context(
-            user_agent=(
-                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/145.0.0.0 Safari/537.36"
-            ),
-            viewport={"width": 1280, "height": 800},
+            user_agent=random.choice(USER_AGENTS),
+            viewport=random.choice([
+                {"width": 1280, "height": 800},
+                {"width": 1440, "height": 900},
+                {"width": 1920, "height": 1080},
+            ]),
             locale="en-US",
+            timezone_id="America/New_York",
         )
 
+        # Block all non-essential requests — images, media, fonts, ads, tracking
+        await self._context.route(
+            "**/*",
+            lambda route: route.abort()
+            if route.request.resource_type in {
+                "image",
+                "media",
+                "font",
+                "stylesheet",
+            }
+            or any(
+                domain in route.request.url
+                for domain in [
+                    "static-assets-1.truthsocial.com",  # media CDN
+                    "1a-1791.com",                       # video CDN
+                    "sentry.io",                         # error tracking
+                    "cookie-script.com",                 # cookie consent
+                    "googletagmanager.com",              # analytics
+                    "google-analytics.com",              # analytics
+                    "innovid.js",                        # ad tracking
+                    "truth/ads",                         # truth social ads
+                    "ads?",                              # ad requests
+                    "ads/impression",                    # ad impressions
+                ]
+            )
+            else route.continue_()
+        )
+
+        # Visit profile page to get Cloudflare cookies
         page = await self._context.new_page()
         await page.goto(settings.profile_url, wait_until="networkidle")
         await page.wait_for_timeout(2500)
