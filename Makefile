@@ -13,4 +13,4 @@ format:
 deploy:
 	git pull
 	uv sync
-	pm2 restart mood_analyzer
+	pm2 restart mood_api
