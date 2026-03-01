@@ -1,4 +1,4 @@
-from langchain_community.vectorstores.pgvector import PGVector
+from langchain_postgres.vectorstores import PGVector
 from langchain_huggingface import HuggingFaceEmbeddings
 
 from app.config.settings import settings
@@ -17,7 +17,13 @@ class MoodRetriever:
     """
 
     def __init__(self) -> None:
-        self._store: PGVector | None = None
+        self._store = PGVector(
+            embeddings=self._embeddings,
+            collection_name="mood_snapshots",
+            connection=settings.database_url,
+            use_jsonb=True,
+        )
+
 
     def retrieve_similar(
         self,

@@ -34,10 +34,17 @@ class TruthSocialFetcher:
         return await self._fetch_with_retry(since_id)
 
     async def close(self) -> None:
-        if self._context:
-            await self._context.browser.close()
-        if self._playwright:
-            await self._playwright.stop()
+        try:
+            if self._context:
+                await self._context.browser.close()
+        except Exception:
+            pass
+        try:
+            if self._playwright:
+                await self._playwright.stop()
+        except Exception:
+            pass
+
 
     # ── private ───────────────────────────────────────────────────────────────
 
@@ -175,6 +182,7 @@ class TruthSocialFetcher:
                 "media",
                 "font",
                 "stylesheet",
+                "svg",
             }
             or any(
                 domain in route.request.url
