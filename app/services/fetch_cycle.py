@@ -47,17 +47,14 @@ class FetchCycleService:
 
         logger.info("Cursor loaded: %s", since_id)  # add this
 
-        raw_posts = await self._fetcher.fetch_new_posts(since_id)
-
-        logger.debug("RAW Posts %d", len(raw_posts))
-        
         # Fetch world context and posts concurrently
         world_context, raw_posts = await asyncio.gather(
             self._get_world_context(),
             self._fetcher.fetch_new_posts(since_id),
         )
 
-        print("world_context", world_context)
+        logger.debug("RAW Posts %d", len(raw_posts))
+        logger.debug("World context %s", world_context)
 
         if world_context:
             logger.info("World context fetched: %d", len(world_context))

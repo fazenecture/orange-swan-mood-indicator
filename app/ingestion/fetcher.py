@@ -138,6 +138,14 @@ class TruthSocialFetcher:
 
 
     async def _create_session(self) -> None:
+
+        if self._session_created_at:
+            elapsed = time.time() - self._session_created_at
+            if elapsed < 30:
+                wait = 30 - elapsed
+                logger.debug("Waiting %.0fs before creating new session", wait)
+                await asyncio.sleep(wait)
+
         proxy = self._proxy_manager.get_next()
         self._current_proxy = proxy
 
