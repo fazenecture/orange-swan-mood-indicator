@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     anthropic_api_key: str = Field(..., env="ANTHROPIC_API_KEY")
 
     # ── OpenAI ───────────────────────────────────────────────────────────────
-    openai_api_key: str = Field(..., env="OPENAI_API_KEY")
+    openai_api_key: str = Field("", env="OPENAI_API_KEY")
     openai_sonnet_equivalent: str = Field("gpt-4o-mini", env="OPENAI_SONNET_MODEL")
     openai_opus_equivalent: str = Field("gpt-4o", env="OPENAI_OPUS_MODEL")
 
