@@ -44,10 +44,11 @@ def run_migrations() -> None:
             replies             INT DEFAULT 0,
             caps_ratio          FLOAT DEFAULT 0,
             exclamation_count   INT DEFAULT 0,
+            question_mark_count INT DEFAULT 0,
             has_nickname        BOOLEAN DEFAULT FALSE,
             has_superlative     BOOLEAN DEFAULT FALSE,
             has_grievance       BOOLEAN DEFAULT FALSE,
-            has_agitation       BOOLEAN DEFAULT FALSE,
+            has_aggression      BOOLEAN DEFAULT FALSE,
             has_rally           BOOLEAN DEFAULT FALSE,
             word_count          INT DEFAULT 0,
             signal_strength     VARCHAR,
@@ -56,12 +57,12 @@ def run_migrations() -> None:
 
         CREATE TABLE IF NOT EXISTS local_analyses (
             id              SERIAL PRIMARY KEY,
-            post_id         VARCHAR UNIQUE REFERENCES posts(id),
+            post_id         VARCHAR UNIQUE REFERENCES posts(id) ON DELETE CASCADE,
             sentiment       JSONB,
             top_emotions    JSONB,
             entities        JSONB,
             zeroshot_mood   JSONB,
-            created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+            analyzed_at     TIMESTAMP WITH TIME ZONE DEFAULT NOW()
         );
 
         CREATE TABLE IF NOT EXISTS daily_mood_state (
@@ -88,6 +89,30 @@ def run_migrations() -> None:
             cycle_output        JSONB
         );
 
+        -- Mood snapshots with outcome data for self-learning RAG
+        CREATE TABLE IF NOT EXISTS mood_snapshots (
+            id                  SERIAL PRIMARY KEY,
+            snapshot_date       DATE NOT NULL,
+            snapshot_time       TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            mood                VARCHAR NOT NULL,
+            intensity           VARCHAR,
+            confidence          FLOAT,
+            key_themes          JSONB,
+            likely_trigger      TEXT,
+            analyst_note        TEXT,
+            signal_agreement    VARCHAR,
+            -- Outcome data — filled in 2 hours after snapshot
+            outcome_enriched    BOOLEAN DEFAULT FALSE,
+            outcome_post_count  INT,
+            outcome_avg_caps    FLOAT,
+            outcome_aggression  INT,
+            outcome_grievance   INT,
+            outcome_duration_mins INT,
+            outcome_summary     TEXT,
+            -- Embedding stored separately in langchain tables
+            embedding_id        UUID
+        );
+
         CREATE TABLE IF NOT EXISTS langchain_pg_collection (
             uuid        UUID PRIMARY KEY,
             name        VARCHAR UNIQUE NOT NULL,
@@ -95,16 +120,43 @@ def run_migrations() -> None:
         );
 
         CREATE TABLE IF NOT EXISTS langchain_pg_embedding (
-            uuid        UUID PRIMARY KEY,
-            collection_id UUID REFERENCES langchain_pg_collection(uuid) ON DELETE CASCADE,
-            embedding   vector(384),
-            document    TEXT,
-            cmetadata   JSONB,
-            custom_id   VARCHAR
+            uuid            UUID PRIMARY KEY,
+            collection_id   UUID REFERENCES langchain_pg_collection(uuid) ON DELETE CASCADE,
+            embedding       vector(384),
+            document        TEXT,
+            cmetadata       JSONB,
+            custom_id       VARCHAR
         );
 
-        CREATE INDEX IF NOT EXISTS idx_posts_posted_at ON posts(posted_at);
-        CREATE INDEX IF NOT EXISTS idx_cycle_log_date ON mood_cycle_log(date);
+        -- Indexes
+        CREATE INDEX IF NOT EXISTS idx_posts_posted_at
+            ON posts(posted_at);
+
+        CREATE INDEX IF NOT EXISTS idx_posts_post_type
+            ON posts(post_type);
+
+        CREATE INDEX IF NOT EXISTS idx_posts_signal_strength
+            ON posts(signal_strength);
+
+        CREATE INDEX IF NOT EXISTS idx_cycle_log_date
+            ON mood_cycle_log(date);
+
+        CREATE INDEX IF NOT EXISTS idx_cycle_log_shift
+            ON mood_cycle_log(shift_detected);
+
+        CREATE INDEX IF NOT EXISTS idx_mood_snapshots_date
+            ON mood_snapshots(snapshot_date);
+
+        CREATE INDEX IF NOT EXISTS idx_mood_snapshots_enriched
+            ON mood_snapshots(outcome_enriched);
+
+        CREATE INDEX IF NOT EXISTS idx_local_analyses_post_id
+            ON local_analyses(post_id);
+
+        -- Column additions for existing deployments (idempotent)
+        ALTER TABLE posts ADD COLUMN IF NOT EXISTS question_mark_count INT DEFAULT 0;
+        ALTER TABLE posts ADD COLUMN IF NOT EXISTS has_aggression BOOLEAN DEFAULT FALSE;
+        ALTER TABLE local_analyses ADD COLUMN IF NOT EXISTS analyzed_at TIMESTAMP WITH TIME ZONE DEFAULT NOW();
     """
     with get_db_connection() as conn:
         with conn.cursor() as cur:

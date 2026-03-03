@@ -168,14 +168,36 @@ RALLY_PATTERN = re.compile(
 # ── HuggingFace zero-shot candidates ─────────────────────────────────────────
 # More specific candidates = more accurate zero-shot classification
 ZEROSHOT_MOOD_CANDIDATES = [
+    # Attack
     "attacking and insulting political opponents by name",
-    "celebrating personal victory and boasting about achievements",
+    "calling for investigations or prosecution of opponents",
+    "declaring war on the media and fake news",
+
+    # Grievance
     "expressing victimhood and claiming unfair treatment",
+    "complaining about witch hunts and political persecution",
+    "expressing outrage at court decisions and legal rulings",
+
+    # Triumphant
+    "celebrating personal victory and boasting about achievements",
+    "claiming credit for economic success and record numbers",
+
+    # Rallying
     "rallying supporters with patriotic and energetic language",
-    "announcing policy decisions or making deals",
-    "issuing direct threats and defiant challenges",
-    "congratulating allies and celebrating others",
-    "expressing extreme anger and outrage",
+    "calling on supporters to fight back and take action",
+
+    # Defiant
+    "issuing direct threats and defiant challenges to opponents",
+    "challenging the legitimacy of institutions and the judiciary",
+
+    # Transactional
+    "announcing policy decisions or executive orders",
+
+    # Agitated
+    "posting rapid fire reactions to live breaking news",
+
+    # Defensive
+    "defending himself against criminal charges and indictments",
 ]
 
 USER_AGENTS = [

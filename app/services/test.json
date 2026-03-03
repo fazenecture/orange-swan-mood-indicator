@@ -1,0 +1,461 @@
+[
+  {
+    "id": "116155069503653714",
+    "posted_at": "2026-03-01T17:21:44.094000Z",
+    "post_type": "original",
+    "raw_content": "I have just been informed that we have destroyed and sunk 9 Iranian Naval Ships, some of them relatively large and important. We are going after the rest — They will soon be floating at the bottom of the sea, also! In a different attack, we largely destroyed their Naval Headquarters. Other than that, their Navy is doing very well! PRESIDENT DONALD J. TRUMP",
+    "analysis_text": "I have just been informed that we have destroyed and sunk 9 Iranian Naval Ships, some of them relatively large and important. We are going after the rest — They will soon be floating at the bottom of the sea, also! In a different attack, we largely destroyed their Naval Headquarters. Other than that, their Navy is doing very well! PRESIDENT DONALD J. TRUMP",
+    "shared_article": null,
+    "likes": 15499,
+    "reposts": 4096,
+    "replies": 2261,
+    "caps_ratio": 0.047,
+    "exclamation_count": 2,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": true,
+    "has_aggression": true,
+    "has_rally": false,
+    "word_count": 64,
+    "signal_strength": "high",
+    "local_analysis": {
+      "sentiment": {
+        "label": "negative",
+        "score": 0.673
+      },
+      "top_emotions": [
+        {
+          "label": "neutral",
+          "score": 0.251
+        },
+        {
+          "label": "admiration",
+          "score": 0.083
+        },
+        {
+          "label": "approval",
+          "score": 0.075
+        }
+      ],
+      "entities": [
+        {
+          "text": "Navy",
+          "type": "ORG"
+        }
+      ],
+      "zeroshot_mood": {
+        "label": "celebrating personal victory and boasting about achievements",
+        "score": 0.675
+      }
+    }
+  },
+  {
+    "id": "116154511908660797",
+    "posted_at": "2026-03-01T14:59:55.870000Z",
+    "post_type": "original",
+    "raw_content": "RT:",
+    "analysis_text": "RT:",
+    "shared_article": null,
+    "likes": 12504,
+    "reposts": 3469,
+    "replies": 1182,
+    "caps_ratio": 1.0,
+    "exclamation_count": 0,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_aggression": false,
+    "has_rally": false,
+    "word_count": 1,
+    "signal_strength": "low",
+    "local_analysis": null
+  },
+  {
+    "id": "116154510504650134",
+    "posted_at": "2026-03-01T14:59:34.447000Z",
+    "post_type": "original",
+    "raw_content": "",
+    "analysis_text": "",
+    "shared_article": null,
+    "likes": 9214,
+    "reposts": 2192,
+    "replies": 488,
+    "caps_ratio": 0.0,
+    "exclamation_count": 0,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_agitation": false,
+    "has_rally": false,
+    "word_count": 0,
+    "signal_strength": "low",
+    "local_analysis": null
+  },
+  {
+    "id": "116154493534592978",
+    "posted_at": "2026-03-01T14:55:15.501000Z",
+    "post_type": "link_share",
+    "raw_content": "Trump’s bold move to rid the world of Iran’s evil regime once and for all:",
+    "analysis_text": "His framing: \"Trump’s bold move to rid the world of Iran’s evil regime once and for all:\"\nArticle shared: \"Trump’s bold move to rid the world of Iran’s evil regime once and for all\"\nArticle context: \"President Donald Trump is taking decisive action against Iran instead of hoping to get away with kicking the can further down the road.\"",
+    "shared_article": {
+      "title": "Trump’s bold move to rid the world of Iran’s evil regime once and for all",
+      "description": "President Donald Trump is taking decisive action against Iran instead of hoping to get away with kicking the can further down the road.",
+      "url": "https://nypost.com/2026/02/28/opinion/trump-stood-by-his-words-and-attacked-iran-ending-the-reign-of-khamenei/",
+      "source": "nypost.com"
+    },
+    "likes": 10674,
+    "reposts": 2617,
+    "replies": 1061,
+    "caps_ratio": 0.0,
+    "exclamation_count": 0,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_aggression": false,
+    "has_rally": false,
+    "word_count": 15,
+    "signal_strength": "medium",
+    "local_analysis": {
+      "sentiment": {
+        "label": "neutral",
+        "score": 0.792
+      },
+      "top_emotions": [
+        {
+          "label": "neutral",
+          "score": 0.945
+        },
+        {
+          "label": "approval",
+          "score": 0.047
+        },
+        {
+          "label": "realization",
+          "score": 0.016
+        }
+      ],
+      "entities": [
+        {
+          "text": "Trump",
+          "type": "PER"
+        },
+        {
+          "text": "Iran",
+          "type": "LOC"
+        },
+        {
+          "text": "Trump",
+          "type": "PER"
+        },
+        {
+          "text": "Iran",
+          "type": "LOC"
+        },
+        {
+          "text": "Donald Trump",
+          "type": "PER"
+        },
+        {
+          "text": "Iran",
+          "type": "LOC"
+        }
+      ],
+      "zeroshot_mood": {
+        "label": "announcing policy decisions or making deals",
+        "score": 0.211
+      }
+    }
+  },
+  {
+    "id": "116154353777651727",
+    "posted_at": "2026-03-01T14:19:42.985000Z",
+    "post_type": "original",
+    "raw_content": "RT:",
+    "analysis_text": "RT:",
+    "shared_article": null,
+    "likes": 11621,
+    "reposts": 3614,
+    "replies": 696,
+    "caps_ratio": 1.0,
+    "exclamation_count": 0,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_aggression": false,
+    "has_rally": false,
+    "word_count": 1,
+    "signal_strength": "low",
+    "local_analysis": null
+  },
+  {
+    "id": "116154351502963230",
+    "posted_at": "2026-03-01T14:19:08.277000Z",
+    "post_type": "original",
+    "raw_content": "",
+    "analysis_text": "",
+    "shared_article": null,
+    "likes": 8269,
+    "reposts": 2124,
+    "replies": 377,
+    "caps_ratio": 0.0,
+    "exclamation_count": 0,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_agitation": false,
+    "has_rally": false,
+    "word_count": 0,
+    "signal_strength": "low",
+    "local_analysis": null
+  },
+  {
+    "id": "116154292038651079",
+    "posted_at": "2026-03-01T14:04:00.919000Z",
+    "post_type": "original",
+    "raw_content": "",
+    "analysis_text": "",
+    "shared_article": null,
+    "likes": 12067,
+    "reposts": 3508,
+    "replies": 965,
+    "caps_ratio": 0.0,
+    "exclamation_count": 0,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_agitation": false,
+    "has_rally": false,
+    "word_count": 0,
+    "signal_strength": "low",
+    "local_analysis": null
+  },
+  {
+    "id": "116154282699222092",
+    "posted_at": "2026-03-01T14:01:38.411000Z",
+    "post_type": "retruth",
+    "raw_content": "RT @DanScavinoPROMISES MADE, PROMISES KEPT. ⒻⒶⒻⓄ",
+    "analysis_text": "[Retruthed] RT @DanScavinoPROMISES MADE, PROMISES KEPT. ⒻⒶⒻⓄ",
+    "shared_article": null,
+    "likes": 1,
+    "reposts": 0,
+    "replies": 0,
+    "caps_ratio": 0.0,
+    "exclamation_count": 0,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_agitation": false,
+    "has_rally": false,
+    "word_count": 0,
+    "signal_strength": "low",
+    "local_analysis": {
+      "sentiment": {
+        "label": "neutral",
+        "score": 0.927
+      },
+      "top_emotions": [
+        {
+          "label": "neutral",
+          "score": 0.962
+        },
+        {
+          "label": "approval",
+          "score": 0.023
+        },
+        {
+          "label": "annoyance",
+          "score": 0.007
+        }
+      ],
+      "entities": [],
+      "zeroshot_mood": {
+        "label": "celebrating personal victory and boasting about achievements",
+        "score": 0.4
+      }
+    }
+  },
+  {
+    "id": "116153963970975385",
+    "posted_at": "2026-03-01T12:40:35.003000Z",
+    "post_type": "link_share",
+    "raw_content": "Michael Goodwin: The death of Ayatollah Khamenei instantly makes the world a better place:",
+    "analysis_text": "His framing: \"Michael Goodwin: The death of Ayatollah Khamenei instantly makes the world a better place:\"\nArticle shared: \"Michael Goodwin: The death of Ayatollah Khamenei instantly makes the world a better place\"\nArticle context: \"In early January, President Trump warned Iran’s Islamist government that if it killed peaceful civilians protesting the economy’s collapse, “the United States of America will come to their rescue.”…\"",
+    "shared_article": {
+      "title": "Michael Goodwin: The death of Ayatollah Khamenei instantly makes the world a better place",
+      "description": "In early January, President Trump warned Iran’s Islamist government that if it killed peaceful civilians protesting the economy’s collapse, “the United States of America will come to their rescue.”…",
+      "url": "https://nypost.com/2026/02/28/opinion/trump-stood-by-his-words-and-attacked-iran-ending-the-reign-of-khamenei/",
+      "source": "nypost.com"
+    },
+    "likes": 14430,
+    "reposts": 3752,
+    "replies": 1258,
+    "caps_ratio": 0.0,
+    "exclamation_count": 0,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_aggression": false,
+    "has_rally": false,
+    "word_count": 14,
+    "signal_strength": "medium",
+    "local_analysis": {
+      "sentiment": {
+        "label": "neutral",
+        "score": 0.79
+      },
+      "top_emotions": [
+        {
+          "label": "neutral",
+          "score": 0.798
+        },
+        {
+          "label": "approval",
+          "score": 0.17
+        },
+        {
+          "label": "realization",
+          "score": 0.03
+        }
+      ],
+      "entities": [
+        {
+          "text": "Michael Goodwin",
+          "type": "PER"
+        },
+        {
+          "text": "A",
+          "type": "PER"
+        },
+        {
+          "text": "##llah Khamene",
+          "type": "PER"
+        },
+        {
+          "text": "Michael Goodwin",
+          "type": "PER"
+        },
+        {
+          "text": "A",
+          "type": "PER"
+        },
+        {
+          "text": "##llah Khamenei",
+          "type": "PER"
+        },
+        {
+          "text": "Trump",
+          "type": "PER"
+        },
+        {
+          "text": "Iran",
+          "type": "LOC"
+        },
+        {
+          "text": "Islam",
+          "type": "MISC"
+        },
+        {
+          "text": "United States of America",
+          "type": "LOC"
+        }
+      ],
+      "zeroshot_mood": {
+        "label": "issuing direct threats and defiant challenges",
+        "score": 0.623
+      }
+    }
+  },
+  {
+    "id": "116152251973821428",
+    "posted_at": "2026-03-01T05:25:12.000000Z",
+    "post_type": "original",
+    "raw_content": "Iran just stated that they are going to hit very hard today, harder than they have ever hit before. THEY BETTER NOT DO THAT, HOWEVER, BECAUSE IF THEY DO, WE WILL HIT THEM WITH A FORCE THAT HAS NEVER BEEN SEEN BEFORE! Thank you for your attention to this matter! President DONALD J. TRUMP",
+    "analysis_text": "Iran just stated that they are going to hit very hard today, harder than they have ever hit before. THEY BETTER NOT DO THAT, HOWEVER, BECAUSE IF THEY DO, WE WILL HIT THEM WITH A FORCE THAT HAS NEVER BEEN SEEN BEFORE! Thank you for your attention to this matter! President DONALD J. TRUMP",
+    "shared_article": null,
+    "likes": 36719,
+    "reposts": 8932,
+    "replies": 4629,
+    "caps_ratio": 0.389,
+    "exclamation_count": 2,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_aggression": false,
+    "has_rally": false,
+    "word_count": 54,
+    "signal_strength": "high",
+    "local_analysis": {
+      "sentiment": {
+        "label": "negative",
+        "score": 0.459
+      },
+      "top_emotions": [
+        {
+          "label": "gratitude",
+          "score": 0.88
+        },
+        {
+          "label": "neutral",
+          "score": 0.104
+        },
+        {
+          "label": "approval",
+          "score": 0.015
+        }
+      ],
+      "entities": [
+        {
+          "text": "Iran",
+          "type": "LOC"
+        }
+      ],
+      "zeroshot_mood": {
+        "label": "issuing direct threats and defiant challenges",
+        "score": 0.556
+      }
+    }
+  },
+  {
+    "id": "116152123132563896",
+    "posted_at": "2026-03-01T04:52:26.042000Z",
+    "post_type": "original",
+    "raw_content": "RT:",
+    "analysis_text": "RT:",
+    "shared_article": null,
+    "likes": 17816,
+    "reposts": 4317,
+    "replies": 979,
+    "caps_ratio": 1.0,
+    "exclamation_count": 0,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_aggression": false,
+    "has_rally": false,
+    "word_count": 1,
+    "signal_strength": "low",
+    "local_analysis": null
+  },
+  {
+    "id": "116152122326447063",
+    "posted_at": "2026-03-01T04:52:13.738000Z",
+    "post_type": "original",
+    "raw_content": "",
+    "analysis_text": "",
+    "shared_article": null,
+    "likes": 11515,
+    "reposts": 2449,
+    "replies": 422,
+    "caps_ratio": 0.0,
+    "exclamation_count": 0,
+    "has_nickname": false,
+    "has_superlative": false,
+    "has_grievance": false,
+    "has_agitation": false,
+    "has_rally": false,
+    "word_count": 0,
+    "signal_strength": "low",
+    "local_analysis": null
+  }
+]
+[{'id': '116155069503653714', 'posted_at': datetime.datetime(2026, 3, 1, 17, 21, 44, 94000, tzinfo=datetime.timezone.utc), 'post_type': 'original', 'raw_content': 'I have just been informed that we have destroyed and sunk 9 Iranian Naval Ships, some of them relatively large and important. We are going after the rest — They will soon be floating at the bottom of the sea, also! In a different attack, we largely destroyed their Naval Headquarters. Other than that, their Navy is doing very well! PRESIDENT DONALD J. TRUMP', 'analysis_text': 'I have just been informed that we have destroyed and sunk 9 Iranian Naval Ships, some of them relatively large and important. We are going after the rest — They will soon be floating at the bottom of the sea, also! In a different attack, we largely destroyed their Naval Headquarters. Other than that, their Navy is doing very well! PRESIDENT DONALD J. TRUMP', 'shared_article': None, 'likes': 15499, 'reposts': 4096, 'replies': 2261, 'caps_ratio': 0.047, 'exclamation_count': 2, 'has_nickname': False, 'has_superlative': False, 'has_grievance': True, 'has_aggression': True, 'has_rally': False, 'word_count': 64, 'signal_strength': 'high', 'local_analysis': {'sentiment': {'label': 'negative', 'score': 0.673}, 'top_emotions': [{'label': 'neutral', 'score': 0.251}, {'label': 'admiration', 'score': 0.083}, {'label': 'approval', 'score': 0.075}], 'entities': [{'text': 'Navy', 'type': 'ORG'}], 'zeroshot_mood': {'label': 'celebrating personal victory and boasting about achievements', 'score': 0.675}}}, {'id': '116154511908660797', 'posted_at': datetime.datetime(2026, 3, 1, 14, 59, 55, 870000, tzinfo=datetime.timezone.utc), 'post_type': 'original', 'raw_content': 'RT:', 'analysis_text': 'RT:', 'shared_article': None, 'likes': 12504, 'reposts': 3469, 'replies': 1182, 'caps_ratio': 1.0, 'exclamation_count': 0, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_aggression': False, 'has_rally': False, 'word_count': 1, 'signal_strength': 'low', 'local_analysis': None}, {'id': '116154510504650134', 'posted_at': datetime.datetime(2026, 3, 1, 14, 59, 34, 447000, tzinfo=datetime.timezone.utc), 'post_type': 'original', 'raw_content': '', 'analysis_text': '', 'shared_article': None, 'likes': 9214, 'reposts': 2192, 'replies': 488, 'caps_ratio': 0.0, 'exclamation_count': 0, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_agitation': False, 'has_rally': False, 'word_count': 0, 'signal_strength': 'low', 'local_analysis': None}, {'id': '116154493534592978', 'posted_at': datetime.datetime(2026, 3, 1, 14, 55, 15, 501000, tzinfo=datetime.timezone.utc), 'post_type': 'link_share', 'raw_content': 'Trump’s bold move to rid the world of Iran’s evil regime once and for all:', 'analysis_text': 'His framing: "Trump’s bold move to rid the world of Iran’s evil regime once and for all:"\nArticle shared: "Trump’s bold move to rid the world of Iran’s evil regime once and for all"\nArticle context: "President Donald Trump is taking decisive action against Iran instead of hoping to get away with kicking the can further down the road."', 'shared_article': {'title': 'Trump’s bold move to rid the world of Iran’s evil regime once and for all', 'description': 'President Donald Trump is taking decisive action against Iran instead of hoping to get away with kicking the can further down the road.', 'url': 'https://nypost.com/2026/02/28/opinion/trumps-bold-move-to-rid-the-world-of-irans-evil-regime-once-and-for-all/', 'source': 'nypost.com'}, 'likes': 10674, 'reposts': 2617, 'replies': 1061, 'caps_ratio': 0.0, 'exclamation_count': 0, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_aggression': False, 'has_rally': False, 'word_count': 15, 'signal_strength': 'medium', 'local_analysis': {'sentiment': {'label': 'neutral', 'score': 0.792}, 'top_emotions': [{'label': 'neutral', 'score': 0.945}, {'label': 'approval', 'score': 0.047}, {'label': 'realization', 'score': 0.016}], 'entities': [{'text': 'Trump', 'type': 'PER'}, {'text': 'Iran', 'type': 'LOC'}, {'text': 'Trump', 'type': 'PER'}, {'text': 'Iran', 'type': 'LOC'}, {'text': 'Donald Trump', 'type': 'PER'}, {'text': 'Iran', 'type': 'LOC'}], 'zeroshot_mood': {'label': 'announcing policy decisions or making deals', 'score': 0.211}}}, {'id': '116154353777651727', 'posted_at': datetime.datetime(2026, 3, 1, 14, 19, 42, 985000, tzinfo=datetime.timezone.utc), 'post_type': 'original', 'raw_content': 'RT:', 'analysis_text': 'RT:', 'shared_article': None, 'likes': 11621, 'reposts': 3614, 'replies': 696, 'caps_ratio': 1.0, 'exclamation_count': 0, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_aggression': False, 'has_rally': False, 'word_count': 1, 'signal_strength': 'low', 'local_analysis': None}, {'id': '116154351502963230', 'posted_at': datetime.datetime(2026, 3, 1, 14, 19, 8, 277000, tzinfo=datetime.timezone.utc), 'post_type': 'original', 'raw_content': '', 'analysis_text': '', 'shared_article': None, 'likes': 8269, 'reposts': 2124, 'replies': 377, 'caps_ratio': 0.0, 'exclamation_count': 0, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_agitation': False, 'has_rally': False, 'word_count': 0, 'signal_strength': 'low', 'local_analysis': None}, {'id': '116154292038651079', 'posted_at': datetime.datetime(2026, 3, 1, 14, 4, 0, 919000, tzinfo=datetime.timezone.utc), 'post_type': 'original', 'raw_content': '', 'analysis_text': '', 'shared_article': None, 'likes': 12067, 'reposts': 3508, 'replies': 965, 'caps_ratio': 0.0, 'exclamation_count': 0, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_agitation': False, 'has_rally': False, 'word_count': 0, 'signal_strength': 'low', 'local_analysis': None}, {'id': '116154282699222092', 'posted_at': datetime.datetime(2026, 3, 1, 14, 1, 38, 411000, tzinfo=datetime.timezone.utc), 'post_type': 'retruth', 'raw_content': 'RT @DanScavinoPROMISES MADE, PROMISES KEPT. ⒻⒶⒻⓄ', 'analysis_text': '[Retruthed] RT @DanScavinoPROMISES MADE, PROMISES KEPT. ⒻⒶⒻⓄ', 'shared_article': None, 'likes': 1, 'reposts': 0, 'replies': 0, 'caps_ratio': 0.0, 'exclamation_count': 0, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_agitation': False, 'has_rally': False, 'word_count': 0, 'signal_strength': 'low', 'local_analysis': {'sentiment': {'label': 'neutral', 'score': 0.927}, 'top_emotions': [{'label': 'neutral', 'score': 0.962}, {'label': 'approval', 'score': 0.023}, {'label': 'annoyance', 'score': 0.007}], 'entities': [], 'zeroshot_mood': {'label': 'celebrating personal victory and boasting about achievements', 'score': 0.4}}}, {'id': '116153963970975385', 'posted_at': datetime.datetime(2026, 3, 1, 12, 40, 35, 3000, tzinfo=datetime.timezone.utc), 'post_type': 'link_share', 'raw_content': 'Michael Goodwin: The death of Ayatollah Khamenei instantly makes the world a better place:', 'analysis_text': 'His framing: "Michael Goodwin: The death of Ayatollah Khamenei instantly makes the world a better place:"\nArticle shared: "Michael Goodwin: The death of Ayatollah Khamenei instantly makes the world a better place"\nArticle context: "In early January, President Trump warned Iran’s Islamist government that if it killed peaceful civilians protesting the economy’s collapse, “the United States of America will come to their rescue.”…"', 'shared_article': {'title': 'Michael Goodwin: The death of Ayatollah Khamenei instantly makes the world a better place', 'description': 'In early January, President Trump warned Iran’s Islamist government that if it killed peaceful civilians protesting the economy’s collapse, “the United States of America will come to their rescue.”…', 'url': 'https://nypost.com/2026/02/28/opinion/trump-stood-by-his-words-and-attacked-iran-ending-the-reign-of-khamenei/', 'source': 'nypost.com'}, 'likes': 14430, 'reposts': 3752, 'replies': 1258, 'caps_ratio': 0.0, 'exclamation_count': 0, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_aggression': False, 'has_rally': False, 'word_count': 14, 'signal_strength': 'medium', 'local_analysis': {'sentiment': {'label': 'neutral', 'score': 0.79}, 'top_emotions': [{'label': 'neutral', 'score': 0.798}, {'label': 'approval', 'score': 0.17}, {'label': 'realization', 'score': 0.03}], 'entities': [{'text': 'Michael Goodwin', 'type': 'PER'}, {'text': 'A', 'type': 'PER'}, {'text': '##llah Khamene', 'type': 'PER'}, {'text': 'Michael Goodwin', 'type': 'PER'}, {'text': 'A', 'type': 'PER'}, {'text': '##llah Khamenei', 'type': 'PER'}, {'text': 'Trump', 'type': 'PER'}, {'text': 'Iran', 'type': 'LOC'}, {'text': 'Islam', 'type': 'MISC'}, {'text': 'United States of America', 'type': 'LOC'}], 'zeroshot_mood': {'label': 'issuing direct threats and defiant challenges', 'score': 0.623}}}, {'id': '116152251973821428', 'posted_at': datetime.datetime(2026, 3, 1, 5, 25, 12, tzinfo=datetime.timezone.utc), 'post_type': 'original', 'raw_content': 'Iran just stated that they are going to hit very hard today, harder than they have ever hit before. THEY BETTER NOT DO THAT, HOWEVER, BECAUSE IF THEY DO, WE WILL HIT THEM WITH A FORCE THAT HAS NEVER BEEN SEEN BEFORE! Thank you for your attention to this matter! President DONALD J. TRUMP', 'analysis_text': 'Iran just stated that they are going to hit very hard today, harder than they have ever hit before. THEY BETTER NOT DO THAT, HOWEVER, BECAUSE IF THEY DO, WE WILL HIT THEM WITH A FORCE THAT HAS NEVER BEEN SEEN BEFORE! Thank you for your attention to this matter! President DONALD J. TRUMP', 'shared_article': None, 'likes': 36719, 'reposts': 8932, 'replies': 4629, 'caps_ratio': 0.389, 'exclamation_count': 2, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_aggression': False, 'has_rally': False, 'word_count': 54, 'signal_strength': 'high', 'local_analysis': {'sentiment': {'label': 'negative', 'score': 0.459}, 'top_emotions': [{'label': 'gratitude', 'score': 0.88}, {'label': 'neutral', 'score': 0.104}, {'label': 'approval', 'score': 0.015}], 'entities': [{'text': 'Iran', 'type': 'LOC'}], 'zeroshot_mood': {'label': 'issuing direct threats and defiant challenges', 'score': 0.556}}}, {'id': '116152123132563896', 'posted_at': datetime.datetime(2026, 3, 1, 4, 52, 26, 42000, tzinfo=datetime.timezone.utc), 'post_type': 'original', 'raw_content': 'RT:', 'analysis_text': 'RT:', 'shared_article': None, 'likes': 17816, 'reposts': 4317, 'replies': 979, 'caps_ratio': 1.0, 'exclamation_count': 0, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_aggression': False, 'has_rally': False, 'word_count': 1, 'signal_strength': 'low', 'local_analysis': None}, {'id': '116152122326447063', 'posted_at': datetime.datetime(2026, 3, 1, 4, 52, 13, 738000, tzinfo=datetime.timezone.utc), 'post_type': 'original', 'raw_content': '', 'analysis_text': '', 'shared_article': None, 'likes': 11515, 'reposts': 2449, 'replies': 422, 'caps_ratio': 0.0, 'exclamation_count': 0, 'has_nickname': False, 'has_superlative': False, 'has_grievance': False, 'has_agitation': False, 'has_rally': False, 'word_count': 0, 'signal_strength': 'low', 'local_analysis': None}]

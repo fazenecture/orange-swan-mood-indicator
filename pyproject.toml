@@ -21,6 +21,7 @@ dependencies = [
     "uvicorn>=0.41.0",
     "fastapi>=0.134.0",
     "langchain-postgres>=0.0.17",
+    "langchain-openai>=1.1.10",
 ]
 
 [project.scripts]

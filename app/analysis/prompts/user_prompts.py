@@ -73,6 +73,12 @@ Post count: {len(posts)}
 ## POSTS (chronological, with local model signals)
 {posts_text}
 
+## NOTABLE SIGNALS RULE
+Extract 2-3 direct quotes from the posts that best illustrate the mood.
+Do NOT reference post numbers or indices.
+Use the actual words he wrote — short punchy phrases work best.
+Example: "TOTAL WITCH HUNT!!!" not "Post 3 contained aggressive language"
+
 ## RESPOND WITH THIS EXACT JSON SCHEMA
 {{
   "batch_index": {batch_index},
@@ -82,7 +88,9 @@ Post count: {len(posts)}
   "intensity": "low|medium|high|frenetic",
   "trajectory": "escalating|stable|de-escalating",
   "key_themes": [],
-  "notable_signals": [],
+  "notable_signals": [
+    "<direct quote from post that best illustrates the mood signal — no post numbers>"
+  ],
   "world_context_relevance": "<how current events connect to what he is posting about>",
   "mood_shifts": [{{"at_post_index": 0, "shift_from": "", "shift_to": "", "trigger_hint": ""}}],
   "batch_summary": "<2-3 sentence plain english summary>"

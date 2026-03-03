@@ -101,7 +101,7 @@ class PostParser:
                 "has_nickname": False,
                 "has_superlative": False,
                 "has_grievance": False,
-                "has_agitation": False,
+                "has_aggression": False,
                 "has_rally": False,
                 "word_count": 0,
                 "signal_strength": SignalStrength.LOW,
