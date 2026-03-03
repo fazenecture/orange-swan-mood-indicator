@@ -1,6 +1,8 @@
 import json
 from datetime import datetime
 
+# Max recent summaries to send in full — older ones get compressed
+_MAX_RECENT_SUMMARIES = 5
 
 class UserPromptBuilder:
     """
@@ -26,17 +28,22 @@ class UserPromptBuilder:
             (
                 f"[{i + 1}] {p['posted_at']} "
                 f"| Type: {p['post_type'].upper()} "
-                f"| Signal: {p['signal_strength']}"
-                f"| Caps: {p['caps_ratio']:.0%}"
-                f"| Exclamations: {p['exclamation_count']}"
-                + (f"| ⚑ nickname" if p.get("has_nickname") else "")
-                + (f"| ⚑ grievance" if p.get("has_grievance") else "")
-                + (f"| ⚑ aggression" if p.get("has_aggression") else "")
-                + (f"| ⚑ rally" if p.get("has_rally") else "")
-                + (f"\nLocal mood: {p['local_analysis']['zeroshot_mood']['label']} ({p['local_analysis']['zeroshot_mood']['score']:.0%})" if p.get("local_analysis") and p["local_analysis"].get("zeroshot_mood") else "")
-                + (f"\nTop emotions: {', '.join(e['label'] for e in p['local_analysis']['top_emotions'])}" if p.get("local_analysis") and p["local_analysis"].get("top_emotions") else "")
+                f"| Signal: {p['signal_strength']} "
+                f"| Caps: {p['caps_ratio']:.0%} "
+                f"| !!!: {p['exclamation_count']}"
+                + (" | ⚑ nickname" if p.get("has_nickname") else "")
+                + (" | ⚑ grievance" if p.get("has_grievance") else "")
+                + (" | ⚑ aggression" if p.get("has_aggression") else "")
+                + (" | ⚑ rally" if p.get("has_rally") else "")
+                + (
+                    f"\nLocal: {p['local_analysis']['zeroshot_mood']['label']} "
+                    f"({p['local_analysis']['zeroshot_mood']['score']:.0%}) | "
+                    f"Emotions: {', '.join(e['label'] for e in p['local_analysis']['top_emotions'][:2])}"
+                    if p.get("local_analysis") and p["local_analysis"].get("zeroshot_mood")
+                    else ""
+                )
                 + f"\n{p['analysis_text']}\n"
-                f"Likes: {p['likes']} | Reposts: {p['reposts']}"
+                + f"♥ {p['likes']} | ↺ {p['reposts']}"
             )
             for i, p in enumerate(posts)
         ])
@@ -44,42 +51,25 @@ class UserPromptBuilder:
         world_section = ""
         if world_context:
             world_section = f"""
-## WORLD CONTEXT (what is happening right now)
+## WORLD CONTEXT
 {world_context}
 Use this to understand WHY he may be posting about certain topics.
-A post about tariffs means something different if markets just crashed.
-A post about courts means something different if a ruling just dropped.
 """
 
-        return f"""
-## BATCH {batch_index + 1} of {total_batches}
-Date: {datetime.now().strftime("%Y-%m-%d")}
-Time window: {posts[0]['posted_at']} to {posts[-1]['posted_at']}
-Post count: {len(posts)}
-
-## AGGREGATE SIGNALS THIS BATCH
-- Avg caps ratio: {avg_caps:.2%}
-- Total exclamations: {total_exclamations}
-- Posts with nickname attacks: {has_nickname}/{len(posts)}
-- Posts with grievance language: {has_grievance}/{len(posts)}
-- Posts with aggression language: {has_aggression}/{len(posts)}
-- Posts with rally language: {has_rally}/{len(posts)}
+        return f"""## BATCH {batch_index + 1}/{total_batches} | {datetime.now().strftime("%Y-%m-%d")} | {posts[0]['posted_at']} → {posts[-1]['posted_at']}
+Posts: {len(posts)} | Avg caps: {avg_caps:.0%} | Exclamations: {total_exclamations} | Nicknames: {has_nickname} | Grievance: {has_grievance} | Aggression: {has_aggression} | Rally: {has_rally}
 
 ## POST TYPE GUIDE
-- ORIGINAL   = his own words, highest mood signal
-- LINK_SHARE = what he CHOSE to amplify, reveals narrative even without his words
-- RETRUTH    = background noise, lowest signal
+ORIGINAL=his words (highest signal) | LINK_SHARE=what he amplifies (medium) | RETRUTH=noise (lowest)
 {world_section}
-## POSTS (chronological, with local model signals)
+## POSTS
 {posts_text}
 
 ## NOTABLE SIGNALS RULE
-Extract 2-3 direct quotes from the posts that best illustrate the mood.
-Do NOT reference post numbers or indices.
-Use the actual words he wrote — short punchy phrases work best.
-Example: "TOTAL WITCH HUNT!!!" not "Post 3 contained aggressive language"
+2-3 direct quotes from posts illustrating mood. No post numbers. Use his actual words.
+Example: "TOTAL WITCH HUNT!!!" not "Post 3 had aggressive language"
 
-## RESPOND WITH THIS EXACT JSON SCHEMA
+## RESPOND JSON ONLY — NO PREAMBLE
 {{
   "batch_index": {batch_index},
   "batch_time_window": "{posts[0]['posted_at']} to {posts[-1]['posted_at']}",
@@ -88,14 +78,11 @@ Example: "TOTAL WITCH HUNT!!!" not "Post 3 contained aggressive language"
   "intensity": "low|medium|high|frenetic",
   "trajectory": "escalating|stable|de-escalating",
   "key_themes": [],
-  "notable_signals": [
-    "<direct quote from post that best illustrates the mood signal — no post numbers>"
-  ],
-  "world_context_relevance": "<how current events connect to what he is posting about>",
+  "notable_signals": ["<direct quote>"],
+  "world_context_relevance": "<1 sentence>",
   "mood_shifts": [{{"at_post_index": 0, "shift_from": "", "shift_to": "", "trigger_hint": ""}}],
-  "batch_summary": "<2-3 sentence plain english summary>"
-}}
-"""
+  "batch_summary": "<2-3 sentences>"
+}}"""
 
     def build_mood_synthesis_prompt(
         self,
@@ -105,78 +92,81 @@ Example: "TOTAL WITCH HUNT!!!" not "Post 3 contained aggressive language"
         rag_context: list[str] | None = None,
         world_context: str | None = None,
     ) -> str:
-        summaries_text = "\n".join([
-            f"Batch {i + 1} [{s.get('batch_time_window', '')}]: {s.get('batch_summary', '')}"
-            f" — mood: {s.get('dominant_mood', '')} ({s.get('intensity', '')})"
-            for i, s in enumerate(state.get("context_summaries", []))
+        # ── Cap summaries to save tokens ──────────────────────────────────────
+        all_summaries = state.get("context_summaries", [])
+        recent_summaries = all_summaries[-_MAX_RECENT_SUMMARIES:]
+        older_summaries = all_summaries[:-_MAX_RECENT_SUMMARIES]
+
+        # Compress older summaries into a single line
+        older_text = ""
+        if older_summaries:
+            moods = [s.get("dominant_mood", "") for s in older_summaries if s.get("dominant_mood")]
+            dominant = max(set(moods), key=moods.count) if moods else "unknown"
+            intensities = [s.get("intensity", "") for s in older_summaries if s.get("intensity")]
+            peak = "frenetic" if "frenetic" in intensities else "high" if "high" in intensities else dominant
+            older_text = (
+                f"EARLIER TODAY ({len(older_summaries)} batches compressed): "
+                f"predominant mood {dominant}, peak intensity {peak}\n"
+            )
+
+        recent_text = "\n".join([
+            f"[{s.get('batch_time_window', '')}] "
+            f"{s.get('dominant_mood', '')} ({s.get('intensity', '')}) — "
+            f"{s.get('batch_summary', '')}"
+            for s in recent_summaries
         ])
 
-        new_posts_text = "\n---\n".join([
-            (
-                f"[{p['posted_at']}] {p['analysis_text']}"
-                + (f"\n  → Local: {p['local_analysis']['zeroshot_mood']['label']}" if p.get("local_analysis") and p["local_analysis"].get("zeroshot_mood") else "")
-            )
-            for p in new_posts
-        ])
+        summaries_text = older_text + recent_text if (older_text or recent_text) else "No prior batches today."
+
+        # ── Raw posts — only included for Opus (high signal cycles) ──────────
+        new_posts_text = ""
+        if new_posts:
+            new_posts_text = "\n## RAW NEW POSTS\n" + "\n---\n".join([
+                (
+                    f"[{p['posted_at']}] {p['analysis_text']}"
+                    + (
+                        f"\n  → {p['local_analysis']['zeroshot_mood']['label']}"
+                        if p.get("local_analysis") and p["local_analysis"].get("zeroshot_mood")
+                        else ""
+                    )
+                )
+                for p in new_posts
+            ])
 
         rag_section = ""
         if rag_context:
-            items = "\n".join(f"- {ctx}" for ctx in rag_context)
-            rag_section = f"\n## HISTORICALLY SIMILAR MOOD PERIODS\n{items}\n"
+            items = "\n".join(f"- {ctx}" for ctx in rag_context[:3])  # cap to 3
+            rag_section = f"\n## HISTORICAL PATTERNS\n{items}\n"
 
         world_section = ""
         if world_context:
-            world_section = f"""
-## WORLD CONTEXT RIGHT NOW
-{world_context}
-Factor this heavily — his mood is almost always a reaction to something.
-If markets are down, if a court ruled against him, if a rival made news —
-these are the triggers. Connect the dots between world events and his posting behavior.
-"""
+            world_section = f"\n## WORLD CONTEXT\n{world_context}\n"
 
         acc = state.get("accumulated", {})
         current = state.get("current_mood", {})
 
-        return f"""
-## DATE: {state['date']}
-## CURRENT TIME: {datetime.now().strftime("%H:%M")} ET
+        return f"""## {state['date']} {datetime.now().strftime("%H:%M")} ET
 
-## CURRENT MOOD STATE
-Label: {current.get('label', 'UNKNOWN')}
-Intensity: {current.get('intensity', 'unknown')}
-Confidence: {current.get('confidence', 0):.0%}
-Sustained since: {current.get('since', 'unknown')}
+## CURRENT MOOD
+{current.get('label', 'UNKNOWN')} | {current.get('intensity', 'unknown')} | {current.get('confidence', 0):.0%} confidence | since {current.get('since', 'unknown')}
 
-## TODAY'S HISTORY (previous batch summaries)
-{summaries_text or 'No prior batches today — this is the first cycle.'}
+## TODAY'S HISTORY
+{summaries_text}
 {rag_section}{world_section}
-## AGGREGATE SIGNALS TODAY
-- Total posts: {acc.get('total_posts', 0)}
-- Avg caps ratio: {acc.get('caps_ratio_avg', 0):.1%}
-- Posts per hour: {acc.get('posts_per_hour', 0):.1f}
-- Peak posts per hour: {acc.get('peak_posts_per_hour', 0):.1f}
+## TODAY'S AGGREGATE
+Posts: {acc.get('total_posts', 0)} | Caps avg: {acc.get('caps_ratio_avg', 0):.0%} | Posts/hr: {acc.get('posts_per_hour', 0):.1f} | Peak/hr: {acc.get('peak_posts_per_hour', 0):.1f}
 
-## NEW BATCH JUST ANALYZED
-{new_batch_summary.get('batch_summary', '')}
-Dominant mood: {new_batch_summary.get('dominant_mood', '')} / Secondary: {new_batch_summary.get('secondary_mood', '')}
-Intensity: {new_batch_summary.get('intensity', '')} | Trajectory: {new_batch_summary.get('trajectory', '')}
-Key themes: {', '.join(new_batch_summary.get('key_themes', []))}
-World context relevance: {new_batch_summary.get('world_context_relevance', 'N/A')}
-
-## RAW NEW POSTS ({len(new_posts)} posts, with local model signals)
+## NEW BATCH
+Mood: {new_batch_summary.get('dominant_mood', '')} / {new_batch_summary.get('secondary_mood', '')} | Intensity: {new_batch_summary.get('intensity', '')} | Trajectory: {new_batch_summary.get('trajectory', '')}
+Themes: {', '.join(new_batch_summary.get('key_themes', []))}
+Summary: {new_batch_summary.get('batch_summary', '')}
+Context: {new_batch_summary.get('world_context_relevance', 'N/A')}
 {new_posts_text}
 
-## YOUR TASK
-Synthesize everything above into a single updated mood assessment.
+## TASK
+Has mood shifted from {current.get('label', 'UNKNOWN')}? Is intensity rising or falling? What is the emotional driver right now?
 
-Think through:
-1. What world events may have triggered this posting behavior?
-2. Are the local model signals (zeroshot, emotions) consistent with the LLM analysis?
-3. Is the current mood a continuation or a shift?
-4. Is intensity building, peaking, or releasing?
-5. What is the most likely emotional driver right now?
-
-## RESPOND WITH THIS EXACT JSON SCHEMA
+## RESPOND JSON ONLY — NO PREAMBLE
 {{
   "current_mood": "",
   "intensity": "low|medium|high|frenetic",
@@ -187,8 +177,7 @@ Think through:
   "shift_to": null,
   "mood_arc_today": "escalating|sustained|volatile|de-escalating|mixed",
   "key_themes": [],
-  "likely_trigger": "<what world event or situation is most likely driving this mood>",
+  "likely_trigger": "<1 sentence>",
   "signal_agreement": "high|medium|low",
-  "analyst_note": "<2-3 sentence plain english note connecting world context to mood>"
-}}
-"""
+  "analyst_note": "<2 sentences max>"
+}}"""

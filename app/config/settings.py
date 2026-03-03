@@ -30,8 +30,8 @@ class Settings(BaseSettings):
 
     # ── OpenAI ───────────────────────────────────────────────────────────────
     openai_api_key: str = Field("", env="OPENAI_API_KEY")
-    openai_sonnet_equivalent: str = Field("gpt-4o-mini", env="OPENAI_SONNET_MODEL")
-    openai_opus_equivalent: str = Field("gpt-4o", env="OPENAI_OPUS_MODEL")
+    openai_sonnet_equivalent: str = "gpt-4o-mini"
+    openai_opus_equivalent: str = "gpt-4o"
 
 
     # ── Proxies ───────────────────────────────────────────────────────────────
@@ -47,8 +47,8 @@ class Settings(BaseSettings):
     batch_size: int = Field(50, env="BATCH_SIZE")
 
     # ── LLM Models ────────────────────────────────────────────────────────────
-    sonnet_model: str = "claude-sonnet-4-6"
-    opus_model: str = "claude-opus-4-6"
+    sonnet_model: str = "claude-haiku-4-5-20251001"
+    opus_model: str = "claude-sonnet-4-6"
 
     # ── Embedding Model (local, free) ─────────────────────────────────────────
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"

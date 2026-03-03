@@ -1,4 +1,4 @@
-from langchain_postgres.vectorstores import PGVector
+from langchain_community.vectorstores import PGVector
 from langchain_huggingface import HuggingFaceEmbeddings
 
 from app.config.settings import settings
@@ -22,10 +22,9 @@ class MoodRetriever:
             model_name=settings.embedding_model,
         )
         self._store = PGVector(
-            embeddings=self._embeddings,
+            embedding_function=self._embeddings,
             collection_name="mood_snapshots",
-            connection=settings.database_url,
-            use_jsonb=True,
+            connection_string=settings.database_url,
         )
 
 
@@ -57,10 +56,9 @@ class MoodRetriever:
     def _get_store(self) -> PGVector:
         if self._store is None:
             self._store = PGVector(
-                embeddings=self._embeddings,
+                embedding_function=self._embeddings,
                 collection_name="mood_snapshots",
-                connection=settings.database_url,
-                use_jsonb=True,
+                connection_string=settings.database_url,
             )
         return self._store
 
