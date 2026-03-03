@@ -62,7 +62,12 @@ class Settings(BaseSettings):
     # ── Logging ───────────────────────────────────────────────────────────────
     log_level: str = Field("INFO", env="LOG_LEVEL")
 
-    model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+        "extra": "ignore",  # ignore unknown env vars instead of crashing
+    }
+
 
     @field_validator("proxies")
     @classmethod
