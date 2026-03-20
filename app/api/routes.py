@@ -104,7 +104,7 @@ class MoodRouter:
         }
 
 
-    def get_market_overlay(days: int = 7) -> dict:
+    def get_market_overlay(self, days: int = 7) -> dict:
         import httpx
         from datetime import datetime, timedelta
 
@@ -117,10 +117,9 @@ class MoodRouter:
                     FROM daily_mood_state
                     WHERE date >= CURRENT_DATE - INTERVAL '%d days'
                     ORDER BY date ASC
-                """, (days,))
+                """ % days)  # no (days,) tuple — format directly
                 mood_rows = cur.fetchall()
 
-        # Yahoo Finance — free, no API key needed
         end = datetime.now()
         start = end - timedelta(days=days + 3)
         url = (
