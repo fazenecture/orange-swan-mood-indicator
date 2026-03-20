@@ -70,7 +70,7 @@ class MoodRouter:
         }
     
 
-    def get_mood_history(days: int = 7) -> dict:
+    def get_mood_history(self, days: int = 7) -> dict:
         intensity_map = {"low": 1, "medium": 2, "high": 3, "frenetic": 4}
 
         with get_db_connection() as conn:
@@ -83,9 +83,9 @@ class MoodRouter:
                         current_confidence,
                         last_updated
                     FROM daily_mood_state
-                    WHERE date >= CURRENT_DATE - INTERVAL '%s days'
+                    WHERE date >= CURRENT_DATE - INTERVAL '%d days'
                     ORDER BY date ASC
-                """, (days,))
+                """ % days)
                 rows = cur.fetchall()
 
         return {
@@ -103,6 +103,7 @@ class MoodRouter:
             ],
         }
 
+
     def get_market_overlay(days: int = 7) -> dict:
         import httpx
         from datetime import datetime, timedelta
@@ -114,7 +115,7 @@ class MoodRouter:
                 cur.execute("""
                     SELECT date, current_mood, current_intensity
                     FROM daily_mood_state
-                    WHERE date >= CURRENT_DATE - INTERVAL '%s days'
+                    WHERE date >= CURRENT_DATE - INTERVAL '%d days'
                     ORDER BY date ASC
                 """, (days,))
                 mood_rows = cur.fetchall()
