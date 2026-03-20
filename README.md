@@ -2,7 +2,7 @@
 
 A real-time AI system that tracks his emotional state throughout the day by analyzing his Truth Social posts. Updated every 2 hour.
 
-**Live at:** [orange-swan-index.lovable.app](https://orange-swan-index.lovable.app)
+**Live at:** [orange-swan-index-web.vercel.app](https://orange-swan-index-web.vercel.app/)
 
 ---
 
