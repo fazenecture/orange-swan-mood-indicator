@@ -117,7 +117,7 @@ class MoodRouter:
                     FROM daily_mood_state
                     WHERE date >= CURRENT_DATE - INTERVAL '%d days'
                     ORDER BY date ASC
-                """ % days)  # no (days,) tuple — format directly
+                """ % days)
                 mood_rows = cur.fetchall()
 
         end = datetime.now()
@@ -129,6 +129,8 @@ class MoodRouter:
             f"&period2={int(end.timestamp())}"
         )
 
+        # Build market lookup by date
+        market_by_date = {}
         market = []
         try:
             resp = httpx.get(url, timeout=5, headers={"User-Agent": "Mozilla/5.0"})
@@ -136,14 +138,29 @@ class MoodRouter:
             result = data["chart"]["result"][0]
             timestamps = result["timestamp"]
             closes = result["indicators"]["quote"][0]["close"]
+            for ts, close in zip(timestamps, closes):
+                if close is not None:
+                    date_str = datetime.fromtimestamp(ts).strftime("%Y-%m-%d")
+                    market_by_date[date_str] = round(close, 2)
+
+            # Fill gaps — for each mood date that has no market data
+            # (weekend, holiday) carry forward the last known close price
+            mood_dates = sorted([str(r["date"]) for r in mood_rows])
+            last_known_close = None
+            for date in mood_dates:
+                if date in market_by_date:
+                    last_known_close = market_by_date[date]
+                elif last_known_close is not None:
+                    # Carry forward last known price for this date
+                    market_by_date[date] = last_known_close
+
+            # Rebuild market list in date order covering all mood dates
             market = [
-                {
-                    "date": datetime.fromtimestamp(ts).strftime("%Y-%m-%d"),
-                    "close": round(close, 2),
-                }
-                for ts, close in zip(timestamps, closes)
-                if close is not None
+                {"date": date, "close": market_by_date[date]}
+                for date in mood_dates
+                if date in market_by_date
             ]
+
         except Exception as exc:
             logger.warning("Market data fetch failed: %s", exc)
 
@@ -158,7 +175,6 @@ class MoodRouter:
             ],
             "market": market,
         }
-
 
 
 MoodRouter()
